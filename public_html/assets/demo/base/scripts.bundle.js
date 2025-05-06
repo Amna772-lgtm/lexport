@@ -3072,7 +3072,7 @@ $(document).ready(function() {
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--more-prev').
                     html($('<i/>').addClass(icons.more)).
                     on('click', pg.gotoMorePage)).
-                appendTo(pagerNumber);
+                appendChild(pagerNumber);
 
             $('<li/>').appendChild($('<input/>').attr('type', 'text').addClass(pfx + 'pager-input form-control').attr('title', title.input).on('keyup', function() {
               // on keyup update [data-page]
@@ -3080,7 +3080,7 @@ $(document).ready(function() {
             }).on('keypress', function(e) {
               // on keypressed enter button
               if (e.which === 13) pg.gotoMorePage(e);
-            })).appendTo(pagerNumber);
+            })).appendChild(pagerNumber);
 
             var pagesNumber = Plugin.getOption('toolbar.items.pagination.pages.desktop.pagesNumber');
             var end = Math.ceil(pg.meta.page / pagesNumber) * pagesNumber;
@@ -3097,7 +3097,7 @@ $(document).ready(function() {
                       attr('data-page', pageNumber).
                       attr('title', pageNumber).
                       on('click', pg.gotoPage)).
-                  appendTo(pagerNumber);
+                  appendChild(pagerNumber);
             }
 
             // more next pages
@@ -3107,7 +3107,7 @@ $(document).ready(function() {
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--more-next').
                     html($('<i/>').addClass(icons.more)).
                     on('click', pg.gotoMorePage)).
-                appendTo(pagerNumber);
+                appendChild(pagerNumber);
 
             // pager next/last button
             $('<li/>').
@@ -3116,7 +3116,7 @@ $(document).ready(function() {
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--next').
                     append($('<i/>').addClass(icons.next)).
                     on('click', pg.gotoMorePage)).
-                appendTo(pagerNumber);
+                appendChild(pagerNumber);
             $('<li/>').
             appendChild($('<a/>').
                     attr('title', title.last).
@@ -3124,7 +3124,7 @@ $(document).ready(function() {
                     append($('<i/>').addClass(icons.last)).
                     on('click', pg.gotoMorePage).
                     attr('data-page', pg.meta.pages)).
-                appendTo(pagerNumber);
+                appendChild(pagerNumber);
 
             // page info
             if (Plugin.getOption('toolbar.items.info')) {
@@ -3132,7 +3132,7 @@ $(document).ready(function() {
             }
 
             $.each(Plugin.getOption('toolbar.layout'), function(i, layout) {
-              $(pg.pagerLayout[layout]).appendTo(pg.pager);
+              $(pg.pagerLayout[layout]).appendChild(pg.pager);
             });
 
             // page size select
@@ -3150,7 +3150,7 @@ $(document).ready(function() {
             $.each(pageSizes, function(i, size) {
               var display = size;
               if (size === -1) display = 'All';
-              $('<option/>').attr('value', size).html(display).appendTo(pageSizeSelect);
+              $('<option/>').attr('value', size).html(display).appendChild(pageSizeSelect);
             });
 
             // init selectpicker to dropdown
@@ -3468,7 +3468,7 @@ $(document).ready(function() {
             subTableRow = $('<tr/>').
                 addClass(pfx + 'datatable__row-subtable ' + pfx + 'datatable__row-loading').
                 hide().
-                append($('<td/>').addClass(pfx + 'datatable__subtable').attr('colspan', Plugin.getTotalColumns()));
+                appendChild($('<td/>').addClass(pfx + 'datatable__subtable').attr('colspan', Plugin.getTotalColumns()));
             $(parentRow).after(subTableRow);
             // add class to even row
             if ($(parentRow).hasClass(pfx + 'datatable__row--even')) {
@@ -4003,7 +4003,7 @@ $(document).ready(function() {
           } else {
             return tda < tdb ? 1 : tda > tdb ? -1 : 0;
           }
-        }).appendTo(container);
+        }).appendChild(container);
       },
 
       /**
