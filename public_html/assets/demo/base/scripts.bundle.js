@@ -3142,7 +3142,7 @@ $(document).ready(function() {
                 attr('data-width', '70px').
                 val(pg.meta.perpage).
                 on('change', pg.updatePerpage).
-                prependTo(pg.pagerLayout['info']);
+                prepend(pg.pagerLayout['info']);
 
             var pageSizes = Plugin.getOption('toolbar.items.pagination.pageSizeSelect');
             // default value here, to fix override option by user
@@ -3455,80 +3455,76 @@ $(document).ready(function() {
 
         options.columns[0]['subtable'] = true;
 
-        // toggle on open sub table
+        // Toggle on open sub table
         var toggleSubTable = function(e) {
-          e.preventDefault();
-          // get parent row of this subtable
-          var parentRow = $(this).closest('.' + pfx + 'datatable__row');
-
-          // get subtable row for sub table
-          var subTableRow = $(parentRow).next('.' + pfx + 'datatable__row-subtable');
-          if ($(subTableRow).length === 0) {
-            // prepare DOM for sub table, each <tr> as parent and add <tr> as child table
-            subTableRow = $('<tr/>').
-                addClass(pfx + 'datatable__row-subtable ' + pfx + 'datatable__row-loading').
-                hide().
-                appendChild($('<td/>').addClass(pfx + 'datatable__subtable').attr('colspan', Plugin.getTotalColumns()));
-            $(parentRow).after(subTableRow);
-            // add class to even row
-            if ($(parentRow).hasClass(pfx + 'datatable__row--even')) {
-              $(subTableRow).addClass(pfx + 'datatable__row-subtable--even');
+            e.preventDefault();
+            // Get parent row of this subtable
+            var parentRow = $(this).closest('.' + pfx + 'datatable__row');
+            // Get subtable row for sub table
+            var subTableRow = $(parentRow).next('.' + pfx + 'datatable__row-subtable');
+            if ($(subTableRow).length === 0) {
+                // Prepare DOM for sub table, each <tr> as parent and add <tr> as child table
+                // Manually create elements to avoid security issues
+                subTableRow = document.createElement('tr');
+                subTableRow.className = pfx + 'datatable__row-subtable ' + pfx + 'datatable__row-loading';
+                subTableRow.style.display = 'none';
+                // Create a <td> element and add sanitized content
+                var td = document.createElement('td');
+                td.className = pfx + 'datatable__subtable';
+                td.colSpan = Plugin.getTotalColumns();
+                subTableRow.appendChild(td);
+                // Append the row after the parent row
+                parentRow.after(subTableRow);
+                // Add class to even row if applicable
+                if ($(parentRow).hasClass(pfx + 'datatable__row--even')) {
+                    subTableRow.classList.add(pfx + 'datatable__row-subtable--even');
+                }
             }
-          }
-
-          $(subTableRow).toggle();
-
-          var subTable = $(subTableRow).find('.' + pfx + 'datatable__subtable');
-
-          // get id from first column of parent row
-          var primaryKey = $(this).closest('[data-field]:first-child').find('.' + pfx + 'datatable__toggle-subtable').data('value');
-
-          var icon = $(this).find('i').removeAttr('class');
-
-          // prevent duplicate datatable init
-          if ($(parentRow).hasClass(pfx + 'datatable__row--subtable-expanded')) {
-            $(icon).addClass(Plugin.getOption('layout.icons.rowDetail.collapse'));
-            // remove expand class from parent row
-            $(parentRow).removeClass(pfx + 'datatable__row--subtable-expanded');
-            // trigger event on collapse
-            $(datatable).trigger(pfx + 'datatable--on-collapse-subtable', [parentRow]);
-          } else {
-            // expand and run callback function
-            $(icon).addClass(Plugin.getOption('layout.icons.rowDetail.expand'));
-            // add expand class to parent row
-            $(parentRow).addClass(pfx + 'datatable__row--subtable-expanded');
-            // trigger event on expand
-            $(datatable).trigger(pfx + 'datatable--on-expand-subtable', [parentRow]);
-          }
-
-          // prevent duplicate datatable init
-          if ($(subTable).find('.' + pfx + 'datatable').length === 0) {
-            // get data by primary id
-            $.map(datatable.dataSet, function(n, i) {
-              // primary id must be at the first column, otherwise e.data will be undefined
-              if (primaryKey === n[options.columns[0].field]) {
-                e.data = n;
-                return true;
-              }
-              return false;
-            });
-
-            // deprecated in v5.0.6
-            e.detailCell = subTable;
-
-            e.parentRow = parentRow;
-            e.subTable = subTable;
-
-            // run callback with event
-            subTableCallback(e);
-
-            $(subTable).children('.' + pfx + 'datatable').on(pfx + 'datatable--on-init', function(e) {
-              $(subTableRow).removeClass(pfx + 'datatable__row-loading');
-            });
-            if (Plugin.getOption('data.type') === 'local') {
-              $(subTableRow).removeClass(pfx + 'datatable__row-loading');
+            // Toggle visibility of the subtable row
+            $(subTableRow).toggle();
+            var subTable = $(subTableRow).find('.' + pfx + 'datatable__subtable');
+            // Get id from first column of parent row
+            var primaryKey = $(this).closest('[data-field]:first-child').find('.' + pfx + 'datatable__toggle-subtable').data('value');
+            var icon = $(this).find('i').removeAttr('class');
+            // Prevent duplicate datatable init
+            if ($(parentRow).hasClass(pfx + 'datatable__row--subtable-expanded')) {
+                $(icon).addClass(Plugin.getOption('layout.icons.rowDetail.collapse'));
+                // Remove expand class from parent row
+                $(parentRow).removeClass(pfx + 'datatable__row--subtable-expanded');
+                // Trigger event on collapse
+                $(datatable).trigger(pfx + 'datatable--on-collapse-subtable', [parentRow]);
+            } else {
+                // Expand and run callback function
+                $(icon).addClass(Plugin.getOption('layout.icons.rowDetail.expand'));
+                // Add expand class to parent row
+                $(parentRow).addClass(pfx + 'datatable__row--subtable-expanded');
+                // Trigger event on expand
+                $(datatable).trigger(pfx + 'datatable--on-expand-subtable', [parentRow]);
             }
-          }
+            // Prevent duplicate datatable init
+            if ($(subTable).find('.' + pfx + 'datatable').length === 0) {
+                // Get data by primary id
+                $.map(datatable.dataSet, function(n, i) {
+                    // Primary id must be at the first column, otherwise e.data will be undefined
+                    if (primaryKey === n[options.columns[0].field]) {
+                        e.data = n;
+                        return true;
+                    }
+                    return false;
+                });
+                // Deprecated in v5.0.6
+                e.detailCell = subTable;
+                e.parentRow = parentRow;
+                e.subTable = subTable;
+                // Run callback with event
+                subTableCallback(e);
+                $(subTable).children('.' + pfx + 'datatable').on(pfx + 'datatable--on-init', function(e) {
+                    $(subTableRow).removeClass(pfx + 'datatable__row-loading');
+                });
+                if (Plugin.getOption('data.type') === 'local') {
+                    $(subTableRow).removeClass(pfx + 'datatable__row-loading');
+                }
+            }
         };
 
         var columns = options.columns;
@@ -3546,6 +3542,7 @@ $(document).ready(function() {
                 if ($(td).find('.' + pfx + 'datatable__toggle-subtable').length > 0) return;
                 // append subtable toggle
                 $(td).
+                    children().
                     html($('<a/>').
                         addClass(pfx + 'datatable__toggle-subtable').
                         attr('href', '#').
@@ -4459,7 +4456,7 @@ $(document).ready(function() {
       destroy: function() {
         $(datatable).parent().find('.' + pfx + 'datatable__pager').remove();
         var initialDatatable = $(datatable.initialDatatable).addClass(pfx + 'datatable--destroyed').show();
-        $(datatable).replaceWith(initialDatatable);
+        $(datatable).replaceChild(initialDatatable);
         datatable = initialDatatable;
         $(datatable).trigger(pfx + 'datatable--on-destroy');
         Plugin.isInit = false;
