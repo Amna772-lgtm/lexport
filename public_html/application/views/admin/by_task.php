@@ -135,8 +135,7 @@ echo form_open_multipart(
 				<?php
 				foreach (branch() as $b) { ?>
 					<option value="<?php echo html_escape($b['id'])?>" <?php if($branch==$b['id']) echo "selected=selected";?>><?php echo html_escape($b['name'])?></option>
-					<?php }
-				?>
+					<?php } ?>
 				</select>
 			</div> 		
 				
