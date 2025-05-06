@@ -3050,7 +3050,7 @@ $(document).ready(function() {
 
             // pager first/previous button
             $('<li/>').
-                append($('<a/>').
+                appendChild($('<a/>').
                     attr('title', title.first).
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--first').
                     append($('<i/>').addClass(icons.first)).
