@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 35.26 49.35" style="enable-background:new 0 0 35.26 49.35;" xml:space="preserve">
+<style type="text/css">
+	.st0{clip-path:url(#SVGID_2_);}
+	.st1{fill:#fff;}
+	.st2{fill:none;stroke:#fff;stroke-width:0.25;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#fff;stroke-width:0.5;stroke-miterlimit:10;}
+</style>
+<g>
+	<g>
+		<defs>
+			<rect id="SVGID_1_" x="20.58" y="40.37" width="13.64" height="7.88"/>
+		</defs>
+		<clipPath id="SVGID_2_">
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		</clipPath>
+		<g class="st0">
+			<path class="st1" d="M30.48,48.68l-4.27-4.35l0-2.09l0.19,0.2c0.03,0.03,2.54,2.61,4.07,4.08l2.45-2.42l-1.35-1.36l-2.33,2.32V43
+				l2.33-2.33l2.61,2.63v1.69L30.48,48.68z M26.44,44.24l4.04,4.12l3.47-3.46v-1.5l-2.38-2.4l-2.11,2.1v1.44l2.1-2.09l1.67,1.68
+				l-2.76,2.73l-0.08-0.08c-1.27-1.22-3.32-3.31-3.96-3.96L26.44,44.24z"/>
+		</g>
+		<g class="st0">
+			<path class="st1" d="M30.5,52.19L26.33,48l-3.56,3.59l-0.01-2.09l3.57-3.57l4.16,4.15l3.69-3.69v2.12L30.5,52.19z M26.33,47.67
+				l4.17,4.19l3.46-3.46v-1.48l-3.47,3.47l-4.16-4.15l-3.34,3.34l0,1.45L26.33,47.67z"/>
+		</g>
+	</g>
+	<line class="st2" x1="5.07" y1="27.51" x2="30.9" y2="27.51"/>
+	<line class="st2" x1="5.33" y1="33.78" x2="30.13" y2="33.78"/>
+	<line class="st2" x1="10.31" y1="38.51" x2="25.78" y2="38.51"/>
+	<polyline class="st3" points="6.09,14.52 12.74,14.52 12.74,21.37 	"/>
+	<line class="st3" x1="6.28" y1="14.41" x2="6.28" y2="21.33"/>
+	<circle class="st3" cx="9.54" cy="10.59" r="2.49"/>
+	<line class="st3" x1="9.46" y1="16.92" x2="9.46" y2="20.17"/>
+	<line class="st3" x1="9.47" y1="15.57" x2="9.47" y2="16.2"/>
+	<rect x="0.99" y="1.46" class="st3" width="33.37" height="46.56"/>
+	<rect x="3.87" y="6.63" class="st3" width="11.6" height="17.3"/>
+</g>
+</svg>

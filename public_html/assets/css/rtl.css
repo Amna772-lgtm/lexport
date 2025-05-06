@@ -1,0 +1,176 @@
+#navigation.modern .columns .logo {
+                float: right;
+            }
+            .mobile-nb {
+                float: left;
+            }
+            #navigation.modern .columns .nav-elements {
+                float: left;
+            }
+            #navigation.modern .columns .nav-menu {
+                float: left;
+            }
+            #navigation.modern .columns ul li {
+                float: right;
+            }
+            #etna_home_notes .home-content {
+                float: left;
+                left: 0;
+                right: auto;
+            }
+            #etna_home_notes .home-content>div {
+                float: right;
+                text-align: right;
+            }
+            #etna_home_notes .left-note {
+                float: right;
+            }
+            #etna_home_notes .left-note {
+                padding-left: 0px;
+                padding-right: 20px;
+            }
+            #etna_home_notes .left-note {
+                border-left: 0px solid white;
+                border-right: 2px solid white;
+            }
+            .f-left {
+                float: right !important;
+            }
+            #home2 .home-boxes .item .number {
+                padding-left: 15px;
+                padding-right: 0;
+                float: right;
+                text-align: left;
+            }
+
+
+            #home2 .home-boxes .item .texts h3 {
+                text-align: right;
+            }
+            #home2 .home-boxes .item .texts p {
+                text-align: right;
+                direction: rtl;
+            }
+            .classic_footer .footer-body {
+                direction: rtl;
+                text-align: right;
+            }
+            .mini-mr {
+                margin-right: 0px !important;
+                margin-left: 5px;
+            }
+
+            element.style {
+                border-radius: 0 !important;
+            }
+            .infocard {
+                right: 0;
+                left: auto;
+            }
+            .qdr-col-3>* {
+                float: right;
+            }
+            .quadra_fixed_modal_top #qfm_button {
+                direction: rtl;
+            }
+            .tp-bullets, .tp-tabs, .tp-thumbs {
+                left: auto !important;
+                right: 95% !important;
+            }
+            .nav-tabs {
+                text-align: right;
+                direction: rtl;
+            }
+            .tab-content {
+                direction: rtl;
+                text-align: right;
+            }
+           /* .slotholder{
+                -moz-transform: scaleX(-1);
+                -o-transform: scaleX(-1);
+                -webkit-transform: scaleX(-1);
+                transform: scaleX(-1);
+                filter: FlipH;
+                -ms-filter: "FlipH";
+            }*/
+            .t-left, .t-left.row, .t-left>.row {
+                text-align: right;
+                justify-content: right;
+            }
+            .row{
+                direction: rtl;
+            }
+            .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+                direction: rtl;
+                text-align: right;
+            }
+            .list {
+                padding-right: 20px;
+                padding-left: initial;
+                text-align: right;
+            }
+            .c-pointer {
+                text-align: center;
+            }
+            .mini-pl {
+                padding-left: 0 !important;
+                padding-right: 5px !important;
+            }
+            .contents .content-box {
+                text-align: center;
+            }
+            .team-type-2 .member {
+                text-align: center;
+            }
+            html, body{
+                font-family: 'Dosis', sans-serif !important;
+            }
+            a {
+                color: inherit;
+            }
+            .m-portlet .m-portlet__head .m-portlet__head-text {
+                color: inherit;
+            }
+            .client_dashboard .m-portlet .m-portlet__head .m-portlet__head-text {
+                color: #333333;
+            }
+            .client_dashboard .m-portlet__head-title.view_all a:after {
+                transform: rotate(138deg);
+                right: 73px;
+            }
+            .activities .m-timeline-2:before {
+                background-color: unset;
+            }
+            .m-portlet .m-portlet__head {
+                background-position: left !important;
+                background: #CAA457 url(ic2.png);
+                background-size: 30%;
+                background-repeat: no-repeat;
+            }
+            .m-widget3 .m-widget3__item .m-widget3__header .m-widget3__info {
+                padding-left: 1rem;
+                padding-right: 0;
+            }
+            .m-nav__link-icon i.flaticon-logout {
+                margin-right: 20px !important;
+                margin-left: 0px !important;
+            }
+            .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-nav__link-badge {
+                right: auto;
+                left: 20%;
+                margin-right: 0;
+            }
+            .link_men_bg {
+                background-position: right !important;
+                margin-left: 0px !important;
+                margin-right: 10px !important;
+            }
+            .m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__heading .m-menu__link-text, .m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-text {
+                color: #fff;
+            }
+            .m-aside-left.m-aside-left--skin-dark {
+                background-color: #1F3959;
+            }
+            .m-aside-menu .m-menu__nav > .m-menu__item:hover{
+                background: #CAA457 !important;
+            }

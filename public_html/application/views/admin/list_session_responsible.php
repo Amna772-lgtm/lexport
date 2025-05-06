@@ -1,0 +1,170 @@
+ <?php include "header.php";?>
+    <div class="breadcrumbs">
+        <div class="col-sm-4">
+            <div class="page-header float-left">
+                <div class="page-title">
+                    <h1>Dashboard</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="page-header float-right">
+                <div class="page-title">
+                    <ol class="breadcrumb text-right">
+                       <li class="active">Dashboard/Session List</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   	<div class="col-xl-12">
+      <div id="msg" class="sufee-alert alert with-close alert-success alert-dismissible fade show success"></div>
+			<div class="card">
+				<div class="card-header">
+				  <strong class="card-title"></strong>
+			<div class="employeeFilterTop">
+			
+		  <div class="employeeFilter">
+		  <strong class=" ">
+		  <a class="<?php if($this->uri->segment(3) == "list_session_responsible") echo "btn btn-primary"; else { echo "btn"; } ?>" href="<?=base_url('admin/appoinment/list_session_responsible');?>">Responsible Employee</a> <a href="<?=base_url('admin/appoinment/list_session_follow_up');?>" class="<?php if($this->uri->segment(3) == "list_session_follow_up") echo "btn btn-primary"; else { echo "btn"; } ?>">Following Employee</a> <a class="<?php if($this->uri->segment(3) == "list_pending_appoinment") echo "btn btn-primary"; else { echo "btn"; } ?>"href="<?=base_url('admin/appoinment/list_pending_appoinment');?>">Pending</a> <a class="<?php if($this->uri->segment(3) == "list_session_close_mission") echo "btn btn-primary"; else { echo "btn"; } ?>"href="<?=base_url('admin/appoinment/list_session_close_mission');?>">Close Mission</a>  </strong>  </div>
+
+        </div>
+        </div>
+				<div class="card-body">
+          <table id="m_datatable" class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+				<th>Client Name</th>
+				<th>Date</th>
+				<th>Time</th>
+                <th>Client Type</th>
+                <th>Opponent Name</th>
+                <th>Case Title</th>
+                <th>Incoming Entry</th>
+                <th>Outgoing Entry</th>
+                <th>Court Name</th>
+                <th>Judicial Circuit</th>
+                <th>Responsible Employee</th>
+                <th>Requirement</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php 
+              $count=1;
+              foreach($data as $appoinment){  ?>
+				<tr class="hide<?php echo $appoinment['id'] ?>">
+                <td><?= $count++ ?></td>
+                <td><?= $appoinment['client_name'] ?></td>
+                <td><?= $appoinment['session_date'] ?></td>
+                <td><?= $appoinment['session_time'] ?></td>
+				<td><?php   $row = $this->db->select('*')->where('client_file_number',$appoinment['client_file_number'])->get('customers')->row();   if($row){ echo $row->type_of_customer; }?></td>
+				<td><?= $appoinment['opponent_full_name'] ?></td>
+                <td><?= $appoinment['case_title'] ?></td>      
+                <td><?= $appoinment['import_entry_no'] ?></td>
+                <td><?= $appoinment['export_entry_no'] ?></td>
+                <td><?= $appoinment['court_name'] ?></td>
+                <td><?= $appoinment['department'] ?></td>
+                <td><?= getEmployeeName($appoinment['responsible_employee']) ?></td>
+                <td><?= $appoinment['note'] ?></td>
+		            <td class="action">
+					 <?php if($appoinment['is_close'] == 0 ){?>
+                    <?php if(isset($datas[3][2]) && $datas[3][2] == 1){?>
+                    <a href=<?= base_url("admin/appoinment/find_session_appoinment/{$appoinment['id']}") ?> class="btn btn-outline-primary fa fa-pencil-square-o editadmin" id=<?= $appoinment['id'] ?>></a>
+                   <?php  } ?>
+				    <?php if($this->session->userdata('role_id') == 1){ ?>
+                    <a href="javascript:;" class="btn btn-outline-danger fa fa-trash delete_appoinment" id=<?= $appoinment['id'] ?>></a>
+					 <?php  } ?>
+					 <?php  } ?>
+					<a href=<?= base_url("admin/appoinment/view_session_appoinment/{$appoinment['id']}") ?>  title="View Case " class="fa fa-eye btn btn-outline-success" target="_blnak"></a>
+					<a  href="javascript:;" data-user="<?= $appoinment['case_id'] ?>" id="<?= $appoinment['id'] ?>" class="btn btn-primary convert_case" title="Edit Case">Convert</a>
+					
+                </td>
+              </tr>
+            <?php } ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+<?php include "footer.php";?>
+
+<script type="text/javascript">
+$("#m_datatable").on("click", ".convert_case", function() {
+var id=$(this).attr("id");
+var case_id=$(this).data("user");
+
+var msg= $('#note_dialog').html();
+var url="<?= base_url('admin/appoinment/convert_mission'); ?>";  
+bootbox.confirm('<div class="assignpopup"><select class="form-control" id="eid" name="eid"><option>Select Following Employee </option><?php  foreach ($employees as $employee) { ?><option value="<?php echo $employee["id"]?>"><?php echo $employee["name"]?></option><?php } ?></select><select class="form-control" id="reason" name="reason"><option>Reason to convert</option><option value="Passing the date">Passing the date</option><option value="Unsuffienet time">Unsuffienet time</option></select><textarea placeholder="Notes" name="note" id="notes" class="form-control col-md-12"></textarea></div>', function(result){
+if(result){
+	var  empid = $('#employee_id :selected').val();
+	var  eid = $('#eid :selected').val();  
+	var  reason = $('#reason :selected').val();
+	var  notes = $('#notes').val();
+
+    $.ajax({
+    type:'ajax',
+    method:'post',
+    url:url,
+    data:{"id" : id,"case_id" : case_id,'empid':empid,'eid':eid,'reason':reason,'notes':notes,'type':'session',},
+    success:function(data){
+       $('#msg').show();
+	   //alert(data);
+         $('#msg').html(data);
+      },
+  });
+
+return true;
+}
+else
+{
+$('#msg').show();
+	$('#msg').html('Convert Failed');
+}
+})
+});
+  <?php if(isset($datas[3][3]) && $datas[3][3] == 1){?>
+    $('.dataTables_filter').show();
+  <?php }else{?>
+    $('.dataTables_filter').hide();
+  <?php } ?>
+
+  $(document).ready(function()
+  {
+    $('#msg').hide();
+    $('#customers-table').DataTable();
+  });
+
+  $('.delete_appoinment').click(function(){
+    
+    var id=$(this).attr("id");
+
+    var url="<?= base_url('admin/appoinment/delete_appoinment'); ?>"; 
+    bootbox.confirm("Are you sure?", function(result){
+      if(result)
+      {
+        $.ajax({
+          type:'ajax',
+          method:'post',
+          url:url,
+          data:{"id" : id},
+          success:function(data){
+            $('#msg').show();
+            $('#msg').html(data);
+          },
+        });
+        $('.hide'+id).hide(200);
+        return true;
+      }
+      else
+      {
+        $('#msg').show();
+        $('#msg').html('delete failed');
+      }
+    })
+  });
+</script>

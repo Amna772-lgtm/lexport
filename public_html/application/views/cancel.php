@@ -1,0 +1,1 @@
+<h2 style=" text-align: center; color: green; ">Your payment has been cancel</h2>

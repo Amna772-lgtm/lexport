@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+
+# Secure environment variables
+SetEnv RECAPTCHA_SECRET_KEY 6Lfvg2EUAAAAAJU3gsQsoww5x0uaHXuRDTFPYJhv
+SetEnv GOOGLE_CALENDAR_API_KEY AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE

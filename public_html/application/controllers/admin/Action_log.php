@@ -1,0 +1,184 @@
+<?php
+class action_log extends CI_Controller
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+        if (intval($this->session->userdata('admin_id')) < 1) {
+            redirect('admin/login', 'refresh');
+            exit;
+        }
+        $this->load->helper('form');
+        $this->load->helper('url');
+        $this->load->database();
+        $this->load->library('pagination');
+        $this->load->model('admin/action_log_mod');
+    }
+
+    public function index()
+    {
+        //pagination settings
+        $config['base_url'] = site_url('admin/action_log/index');
+        $config['total_rows'] = $this->db->count_all('action_log');
+        $config['per_page'] = "100";
+        $config["uri_segment"] = 4;
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config['use_page_numbers'] = TRUE;
+        $config["num_links"] = 10;
+
+        // integrate bootstrap pagination
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = false;
+        $config['last_link'] = false;
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = '«';
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = '»';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $start = (int)$this->uri->segment(4) * $config['per_page'] + 1;
+        $end = ($this->uri->segment(3) == floor($config['total_rows'] / $config['per_page'])) ? $config['total_rows'] : (int)$this->uri->segment(4) * $config['per_page'] + $config['per_page'];
+        $qwe = 100;
+        if (floor($start / $qwe) == 0) {
+            $qwert = 1;
+        } else {
+            $qwert = floor($start / $qwe);
+        }
+        $data['result_count'] = "Showing 1 - " . $qwert . " of " . round($config['total_rows'] / $qwe) . " Results";
+        $this->pagination->initialize($config);
+
+        $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+
+        // get books list
+        $data['posts'] = $this->action_log_mod->get_action_log($config["per_page"], $data['page'], NULL);
+
+        $data['pagination'] = $this->pagination->create_links();
+
+        // load view
+        $this->load->view('admin/action_log', $data);
+    }
+
+    public function search()
+    {
+        //pagination settings
+        $search = ($this->input->post("role")) ? $this->input->post("role") : "NIL";
+
+        $search = ($this->uri->segment(4)) ? $this->uri->segment(4) : $search;
+
+        // pagination settings
+        $config = array();
+        $config['base_url'] = site_url("admin/action_log/search/$search");
+        $config['total_rows'] = $this->action_log_mod->get_books_count($search);
+        $config['per_page'] = "100";
+        $config["uri_segment"] = 4;
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config['use_page_numbers'] = TRUE;
+        $config["num_links"] = 10;
+
+        // integrate bootstrap pagination
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = false;
+        $config['last_link'] = false;
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = '«';
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = '»';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $start = (int)$this->uri->segment(5) * $config['per_page'] + 1;
+        $end = ($this->uri->segment(5) == floor($config['total_rows'] / $config['per_page'])) ? $config['total_rows'] : (int)$this->uri->segment(5) * $config['per_page'] + $config['per_page'];
+        $qwe = 100;
+        if (floor($start / $qwe) == 0) {
+            $qwert = 1;
+        } else {
+            $qwert = floor($start / $qwe);
+        }
+        $data['result_count'] = "Showing 1 - " . $qwert . " of " . round($config['total_rows'] / $qwe) . " Results";
+        $this->pagination->initialize($config);
+
+        $data['page'] = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+
+        // get books list
+        $data['posts'] = $this->action_log_mod->get_action_log($config["per_page"], $data['page'], $search);
+
+        $data['pagination'] = $this->pagination->create_links();
+
+        // load view
+        $this->load->view('admin/action_log', $data);
+    }
+
+    function search1()
+    {
+        // get search string
+        $search = ($this->input->post("role")) ? $this->input->post("role") : "NIL";
+
+        $search = ($this->uri->segment(4)) ? $this->uri->segment(4) : $search;
+
+        // pagination settings
+        $config = array();
+        $config['base_url'] = site_url("admin/action_log/search/$search");
+        $config['total_rows'] = $this->action_log_mod->get_books_count($search);
+        $config['per_page'] = "50";
+        $config["uri_segment"] = 4;
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = floor($choice);
+
+        // integrate bootstrap pagination
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = false;
+        $config['last_link'] = false;
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = 'Prev';
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = 'Next';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $start = (int)$this->uri->segment(5) * $config['per_page'] + 1;
+        $end = ($this->uri->segment(4) == floor($config['total_rows'] / $config['per_page'])) ? $config['total_rows'] : (int)$this->uri->segment(5) * $config['per_page'] + $config['per_page'];
+        $qwe = 100;
+        if (floor($start / $qwe) == 0) {
+            $qwert = 1;
+        } else {
+            $qwert = floor($start / $qwe);
+        }
+        $data['result_count'] = "Showing 1 - " . $qwert . " of " . round($config['total_rows'] / $qwe) . " Results";
+        $this->pagination->initialize($config);
+
+        echo     $data['page'] = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+        // get books list
+        $data['posts'] = $this->action_log_mod->get_action_log($config["per_page"], $data['page'], $search);
+
+        $data['pagination'] = $this->pagination->create_links();
+
+        //Load view
+        $this->load->view('admin/action_log', $data);
+    }
+}
