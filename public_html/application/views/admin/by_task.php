@@ -133,15 +133,10 @@ echo form_open_multipart(
 				<select name="branch" id="branch" class="form-control">
 				<option  value=""><?php echo $this->lang->line( 'All' ); ?></option>
 				<?php
-				foreach ( branch() as $b ) {
-					?>
-				<option value="<?php echo $b['id']; ?>" 
-											<?php
-											if ( $branch == $b['id'] ) {
-												echo 'selected=selected';}
-											?>
-				><?php echo $b['name']; ?></option>
-				<?php } ?>
+				foreach (branch() as $b) { ?>
+					<option value="<?php echo html_escape($b['id'])?>" <?php if($branch==$b['id']) echo "selected=selected";?>><?php echo html_escape($b['name'])?></option>
+					<?php }
+				?>
 				</select>
 			</div> 		
 				

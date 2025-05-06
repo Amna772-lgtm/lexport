@@ -389,18 +389,22 @@ public function delete_admin_modify_upload_file() {
 
     echo "Deleted File " . htmlspecialchars($sanitized_name) . "<br>";
 }
-public function delete_upload_files($name,$case_number) {
-
-$img = $this->db->delete('document', ['id' => $case_number, 'name' => $name]);
-
-if ($img) {
-	unlink("uploads/case_file/" . $name);
-}
-$send=$_SERVER['HTTP_REFERER'];
-$json_data['case_id']= $case_number;
-insertActionLog($json_data,0,"e-service","assign");
-return redirect($send);
-
+public function delete_upload_files($name, $case_number) {
+    // Delete the file record from the database
+    $deleted = $this->db->delete('document', ['id' => $case_number, 'name' => $name]);
+    // Delete the actual file if the DB deletion was successful
+    if ($deleted && file_exists("uploads/case_file/" . $name)) {
+        unlink("uploads/case_file/" . $name);
+    }
+    // Safely handle the redirect to prevent open redirect vulnerability
+    $referer      = $_SERVER['HTTP_REFERER'] ?? '';
+    $referer_host = parse_url($referer, PHP_URL_HOST);
+    $site_host    = parse_url(site_url(), PHP_URL_HOST);
+    $safe_redirect = ($referer && $referer_host === $site_host) ? $referer : site_url();
+    // Log the action
+    $json_data['case_id'] = $case_number;
+    insertActionLog($json_data, 0, "e-service", "assign");
+    return redirect($safe_redirect);
 }
 public function admin_modify_upload_file() {
 	$fid = $_POST['fid'];
