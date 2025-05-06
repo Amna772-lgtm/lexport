@@ -2431,112 +2431,98 @@ $(document).ready(function() {
        * Setup extra system column properties
        * Note: selector checkbox, subtable toggle
        */
-      setupSystemColumn: function() {
-        datatable.dataSet = datatable.dataSet || [];
-        // no records available
-        if (datatable.dataSet.length === 0) return;
-
-        var columns = options.columns;
-        $(datatable.tableBody).find('.' + pfx + 'datatable__row').each(function(tri, tr) {
-          $(tr).find('.' + pfx + 'datatable__cell').each(function(tdi, td) {
-            // get column settings by field
-            var column = $.grep(columns, function(n, i) {
-              return $(td).data('field') === n.field;
-            })[0];
-            if (typeof column !== 'undefined') {
-              var value = $(td).text();
-
-              // enable column selector
-              if (typeof column.selector !== 'undefined' && column.selector !== false) {
-                // check if checkbox exist
-                if ($(td).find('.' + pfx + 'checkbox [type="checkbox"]').length > 0) return;
-
-                $(td).addClass(pfx + 'datatable__cell--check');
-
-                // append checkbox
-                var chk = $('<label/>').
-                    addClass(pfx + 'checkbox ' + pfx + 'checkbox--single').
-                    append($('<input/>').attr('type', 'checkbox').attr('value', value).on('click', function() {
-                      if ($(this).is(':checked')) {
-                        // add checkbox active row class
-                        Plugin.setActive(this);
-                      } else {
-                        // add checkbox active row class
-                        Plugin.setInactive(this);
-                      }
-                    })).
-                    append('&nbsp;<span></span>');
-
-                // checkbox selector has outline style
-                if (typeof column.selector.class !== 'undefined') {
-                  $(chk).addClass(column.selector.class);
-                }
-
-                $(td).children().html(chk);
-              }
-
-              // enable column subtable toggle
-              if (typeof column.subtable !== 'undefined' && column.subtable) {
-                // check if subtable toggle exist
-                if ($(td).find('.' + pfx + 'datatable__toggle-subtable').length > 0) return;
-                // append subtable toggle
-                $(td).
-                    children().
-                    html($('<a/>').
-                        addClass(pfx + 'datatable__toggle-subtable').
-                        attr('href', '#').
-                        attr('data-value', value).
-                        append($('<i/>').addClass(Plugin.getOption('layout.icons.rowDetail.collapse'))));
-              }
-            }
-          });
-        });
-
-        // init checkbox for header/footer
-        var initCheckbox = function(tr) {
-          // get column settings by field
-          var column = $.grep(columns, function(n, i) {
-            return typeof n.selector !== 'undefined' && n.selector !== false;
-          })[0];
-
-          if (typeof column !== 'undefined') {
+    setupSystemColumn: function() {
+    datatable.dataSet = datatable.dataSet || [];
+    // no records available
+    if (datatable.dataSet.length === 0) return;
+    var columns = options.columns;
+    $(datatable.tableBody).find('.' + pfx + 'datatable__row').each(function(tri, tr) {
+        $(tr).find('.' + pfx + 'datatable__cell').each(function(tdi, td) {
+        // get column settings by field
+        var column = $.grep(columns, function(n, i) {
+            return $(td).data('field') === n.field;
+        })[0];
+        if (typeof column !== 'undefined') {
+            var value = $(td).text();
             // enable column selector
             if (typeof column.selector !== 'undefined' && column.selector !== false) {
-              var td = $(tr).find('[data-field="' + column.field + '"]');
-              // check if checkbox exist
-              if ($(td).find('.' + pfx + 'checkbox [type="checkbox"]').length > 0) return;
-
-              $(td).addClass(pfx + 'datatable__cell--check');
-
-              // append checkbox
-              var chk = $('<label/>').
-                  addClass(pfx + 'checkbox ' + pfx + 'checkbox--single ' + pfx + 'checkbox--all').
-                  append($('<input/>').attr('type', 'checkbox').on('click', function() {
+            // check if checkbox exist
+            if ($(td).find('.' + pfx + 'checkbox [type="checkbox"]').length > 0) return;
+            $(td).addClass(pfx + 'datatable__cell--check');
+            // append checkbox
+            var chk = $('<label/>').
+                addClass(pfx + 'checkbox ' + pfx + 'checkbox--single').
+                append($('<input/>').attr('type', 'checkbox').attr('value', value).on('click', function() {
                     if ($(this).is(':checked')) {
-                      Plugin.setActiveAll(true);
+                    // add checkbox active row class
+                    Plugin.setActive(this);
                     } else {
-                      Plugin.setActiveAll(false);
+                    // add checkbox active row class
+                    Plugin.setInactive(this);
                     }
-                  })).
-                  append('&nbsp;<span></span>');
-
-              // checkbox selector has outline style
-              if (typeof column.selector.class !== 'undefined') {
+                })).
+                append('&nbsp;<span></span>');
+            // checkbox selector has outline style
+            if (typeof column.selector.class !== 'undefined') {
                 $(chk).addClass(column.selector.class);
-              }
-
-              $(td).children().html(chk);
             }
-          }
-        };
-
-        if (options.layout.header) {
-          initCheckbox($(datatable.tableHead).find('.' + pfx + 'datatable__row').first());
+            $(td).children().html(chk);
+            }
+            // enable column subtable toggle
+            if (typeof column.subtable !== 'undefined' && column.subtable) {
+            // check if subtable toggle exist
+            if ($(td).find('.' + pfx + 'datatable__toggle-subtable').length > 0) return;
+            // append subtable toggle
+            $(td).
+                children().
+                html($('<a/>').
+                    addClass(pfx + 'datatable__toggle-subtable').
+                    attr('href', '#').
+                    attr('data-value', value).
+                    append($('<i/>').addClass(Plugin.getOption('layout.icons.rowDetail.collapse'))));
+            }
         }
-        if (options.layout.footer) {
-          initCheckbox($(datatable.tableFoot).find('.' + pfx + 'datatable__row').first());
+        });
+    });
+    // init checkbox for header/footer
+    var initCheckbox = function(tr) {
+        // get column settings by field
+        var column = $.grep(columns, function(n, i) {
+        return typeof n.selector !== 'undefined' && n.selector !== false;
+        })[0];
+        if (typeof column !== 'undefined') {
+        // enable column selector
+        if (typeof column.selector !== 'undefined' && column.selector !== false) {
+            var td = $(tr).find('[data-field="' + column.field + '"]');
+            // check if checkbox exist
+            if ($(td).find('.' + pfx + 'checkbox [type="checkbox"]').length > 0) return;
+            $(td).addClass(pfx + 'datatable__cell--check');
+            // append checkbox
+            var chk = $('<label/>').
+                addClass(pfx + 'checkbox ' + pfx + 'checkbox--single ' + pfx + 'checkbox--all').
+                append($('<input/>').attr('type', 'checkbox').on('click', function() {
+                if ($(this).is(':checked')) {
+                    Plugin.setActiveAll(true);
+                } else {
+                    Plugin.setActiveAll(false);
+                }
+                })).
+                append('&nbsp;<span></span>');
+            // checkbox selector has outline style
+            if (typeof column.selector.class !== 'undefined') {
+            $(chk).addClass(column.selector.class);
+            }
+            $(td).children().html(chk);
         }
-      },
+        }
+    };
+    if (options.layout.header) {
+        initCheckbox($(datatable.tableHead).find('.' + pfx + 'datatable__row').first());
+    }
+    if (options.layout.footer) {
+        initCheckbox($(datatable.tableFoot).find('.' + pfx + 'datatable__row').first());
+    }
+    },
 
       /**
        * Adjust width to match container size
@@ -3142,7 +3128,7 @@ $(document).ready(function() {
                 attr('data-width', '70px').
                 val(pg.meta.perpage).
                 on('change', pg.updatePerpage).
-                prepend(pg.pagerLayout['info']);
+                prependChild(pg.pagerLayout['info']);
 
             var pageSizes = Plugin.getOption('toolbar.items.pagination.pageSizeSelect');
             // default value here, to fix override option by user
