@@ -163,7 +163,7 @@ var type = document.querySelector('.type').id;
         processData: false,
         success: function(url1) {
         //$("#audio").attr("src", url);
-		$(".putaudiores").append(url1);
+		$(".putaudiores").appendChild(url1);
 		$('.audio_name').val('');
 		
         //$("#audio")[0].play();
