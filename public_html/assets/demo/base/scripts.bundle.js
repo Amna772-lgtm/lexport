@@ -3056,25 +3056,25 @@ $(document).ready(function() {
                     append($('<i/>').addClass(icons.first)).
                     on('click', pg.gotoMorePage).
                     attr('data-page', 1)).
-                appendTo(pagerNumber);
+                    appendChild(pagerNumber);
             $('<li/>').
-                append($('<a/>').
+            appendChild($('<a/>').
                     attr('title', title.prev).
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--prev').
                     append($('<i/>').addClass(icons.prev)).
                     on('click', pg.gotoMorePage)).
-                appendTo(pagerNumber);
+                    appendChild(pagerNumber);
 
             // more previous pages
             $('<li/>').
-                append($('<a/>').
+            appendChild($('<a/>').
                     attr('title', title.more).
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--more-prev').
                     html($('<i/>').addClass(icons.more)).
                     on('click', pg.gotoMorePage)).
                 appendTo(pagerNumber);
 
-            $('<li/>').append($('<input/>').attr('type', 'text').addClass(pfx + 'pager-input form-control').attr('title', title.input).on('keyup', function() {
+            $('<li/>').appendChild($('<input/>').attr('type', 'text').addClass(pfx + 'pager-input form-control').attr('title', title.input).on('keyup', function() {
               // on keyup update [data-page]
               $(this).attr('data-page', Math.abs($(this).val()));
             }).on('keypress', function(e) {
@@ -3091,7 +3091,7 @@ $(document).ready(function() {
             for (var x = start; x < end; x++) {
               var pageNumber = x + 1;
               $('<li/>').
-                  append($('<a/>').
+              appendChild($('<a/>').
                       addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link-number').
                       text(pageNumber).
                       attr('data-page', pageNumber).
@@ -3102,7 +3102,7 @@ $(document).ready(function() {
 
             // more next pages
             $('<li/>').
-                append($('<a/>').
+            appendChild($('<a/>').
                     attr('title', title.more).
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--more-next').
                     html($('<i/>').addClass(icons.more)).
@@ -3111,14 +3111,14 @@ $(document).ready(function() {
 
             // pager next/last button
             $('<li/>').
-                append($('<a/>').
+            appendChild($('<a/>').
                     attr('title', title.next).
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--next').
                     append($('<i/>').addClass(icons.next)).
                     on('click', pg.gotoMorePage)).
                 appendTo(pagerNumber);
             $('<li/>').
-                append($('<a/>').
+            appendChild($('<a/>').
                     attr('title', title.last).
                     addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--last').
                     append($('<i/>').addClass(icons.last)).
@@ -3552,7 +3552,7 @@ $(document).ready(function() {
                         attr('data-value', value).
                         attr('title', Plugin.getOption('detail.title')).
                         on('click', toggleSubTable).
-                        append($('<i/>').css('width', $(td).data('width')).addClass(Plugin.getOption('layout.icons.rowDetail.collapse'))));
+                        appendChild($('<i/>').css('width', $(td).data('width')).addClass(Plugin.getOption('layout.icons.rowDetail.collapse'))));
               }
             }
           });
