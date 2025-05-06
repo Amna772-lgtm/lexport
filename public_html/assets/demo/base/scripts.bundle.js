@@ -3433,14 +3433,10 @@ $(document).ready(function() {
       setupSubDatatable: function() {
         var subTableCallback = Plugin.getOption('detail.content');
         if (typeof subTableCallback !== 'function') return;
-
-        // subtable already exist
+        // Subtable already exists
         if ($(datatable.table).find('.' + pfx + 'datatable__subtable').length > 0) return;
-
         $(datatable.wrap).addClass(pfx + 'datatable--subtable');
-
         options.columns[0]['subtable'] = true;
-
         // Toggle on open sub table
         var toggleSubTable = function(e) {
             e.preventDefault();
@@ -3512,38 +3508,41 @@ $(document).ready(function() {
                 }
             }
         };
-
         var columns = options.columns;
         $(datatable.tableBody).find('.' + pfx + 'datatable__row').each(function(tri, tr) {
-          $(tr).find('.' + pfx + 'datatable__cell').each(function(tdi, td) {
-            // get column settings by field
-            var column = $.grep(columns, function(n, i) {
-              return $(td).data('field') === n.field;
-            })[0];
-            if (typeof column !== 'undefined') {
-              var value = $(td).text();
-              // enable column subtable toggle
-              if (typeof column.subtable !== 'undefined' && column.subtable) {
-                // check if subtable toggle exist
-                if ($(td).find('.' + pfx + 'datatable__toggle-subtable').length > 0) return;
-                // append subtable toggle
-                $(td).
-                    children().
-                    html($('<a/>').
-                        addClass(pfx + 'datatable__toggle-subtable').
-                        attr('href', '#').
-                        attr('data-value', value).
-                        attr('title', Plugin.getOption('detail.title')).
-                        on('click', toggleSubTable).
-                        appendChild($('<i/>').css('width', $(td).data('width')).addClass(Plugin.getOption('layout.icons.rowDetail.collapse'))));
-              }
-            }
-          });
+            $(tr).find('.' + pfx + 'datatable__cell').each(function(tdi, td) {
+                // Get column settings by field
+                var column = $.grep(columns, function(n, i) {
+                    return $(td).data('field') === n.field;
+                })[0];
+                if (typeof column !== 'undefined') {
+                    var value = $(td).text();
+                    // Sanitize dynamic content before use
+                    var sanitizedValue = DOMPurify.sanitize(value); // Sanitize data-value content
+                    var sanitizedTitle = DOMPurify.sanitize(Plugin.getOption('detail.title')); // Sanitize title attribute
+                    // Enable column subtable toggle
+                    if (typeof column.subtable !== 'undefined' && column.subtable) {
+                        // Check if subtable toggle exists
+                        if ($(td).find('.' + pfx + 'datatable__toggle-subtable').length > 0) return;
+                        // Manually create the <a> element and <i> icon
+                        var toggleLink = document.createElement('a');
+                        toggleLink.className = pfx + 'datatable__toggle-subtable';
+                        toggleLink.href = '#';
+                        toggleLink.setAttribute('data-value', sanitizedValue);  // Use sanitized value
+                        toggleLink.setAttribute('title', sanitizedTitle);  // Use sanitized title
+                        toggleLink.addEventListener('click', toggleSubTable);
+                        var icon = document.createElement('i');
+                        icon.style.width = $(td).data('width');
+                        icon.className = Plugin.getOption('layout.icons.rowDetail.collapse');
+                        toggleLink.appendChild(icon);
+                        // Append the sanitized toggle link to the <td>
+                        td.innerHTML = ''; // Clear any existing content
+                        td.appendChild(toggleLink);
+                    }
+                }
+            });
         });
-
-        // $(datatable.tableHead).find('.'+pfx+'-datatable__row').first()
-      },
-
+    },
       /**
        * Datasource mapping callback
        */
